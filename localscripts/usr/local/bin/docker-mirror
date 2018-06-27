@@ -1,0 +1,53 @@
+#!/bin/bash
+
+set -o pipefail  # trace ERR through pipes
+set -o errtrace  # trace ERR through 'time command' and other functions
+set -o nounset   ## set -u : exit the script if you try to use an uninitialised variable
+set -o errexit   ## set -e : exit the script if any statement returns a non-true return value
+
+# Check if user is root
+[ $(id -u) != "0" ] && echo "Error: You must be root to run this script" && exit 1
+
+# Change CentOS Base Repo
+function change_base_repo()
+{
+    echo "=> Download ${1} Mirror [$BASE_URL] ..."
+    curl -o /etc/yum.repos.d/CentOS-Base.repo $BASE_URL
+    sed -i 's@gpgcheck=1@gpgcheck=0@g' /etc/yum.repos.d/CentOS-Base.repo
+    echo ""
+}
+
+# Change EPEL Repo
+function change_epel_repo()
+{
+    echo "=> Download ${1} Mirror [$EPEL_URL] ..."
+    curl -o /etc/yum.repos.d/epel.repo $EPEL_URL
+    sed -i 's@gpgcheck=1@gpgcheck=0@g' /etc/yum.repos.d/epel.repo
+    echo ""
+}
+
+
+##################################################################################
+
+
+REPO=$1
+
+if [ $REPO == '' ];then
+    echo "Usage: `basename $0` [options]" && exit 1
+fi
+
+if [ $REPO == 'aliyun' ];then
+    BASE_URL=http://mirrors.aliyun.com/repo/Centos-6.repo
+    EPEL_URL=http://mirrors.aliyun.com/repo/epel-6.repo
+fi
+
+if [ $REPO == '163' ];then
+    BASE_URL=http://mirrors.163.com/.help/CentOS6-Base-163.repo
+    EPEL_URL=http://mirrors.163.com/.help/fedora-163.repo
+fi
+
+
+change_base_repo $REPO
+change_epel_repo $REPO
+
+yum clean all
