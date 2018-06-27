@@ -15,7 +15,7 @@
 ## 如何使用
 
 ```
-FROM alwooo.cn/devops/centos:6.8
+FROM movoin/devops-centos:6
 ```
 
 ## 构建机制与生命周期
@@ -32,7 +32,7 @@ FROM alwooo.cn/devops/centos:6.8
 ## 拉取镜像
 
 ```
-docker pull alwooo.cn/devops/centos
+docker pull movoin/devops-centos
 ```
 
 ## 更新日志
