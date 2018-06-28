@@ -2,21 +2,21 @@ MAKEFLAGS += --silent
 
 DOCKER_REPO="movoin/devops-centos"
 
-all: centos/6
+all: centos
 
-publish: push/6
+publish: push
 
 #
-# image: movoin/devops-centos:6
+# image: movoin/devops-centos
 #
-centos/6:
-	bash build.sh "${DOCKER_REPO}" 6
+centos:
+	bash build.sh "${DOCKER_REPO}"
 
-test/6:
-	docker run -it --rm ${DOCKER_REPO}:6
+test:
+	docker run -it --rm ${DOCKER_REPO}
 
-run/6:
-	docker run -it --rm ${DOCKER_REPO}:6 bash
+run:
+	docker run -it --rm ${DOCKER_REPO} bash
 
-push/6:
-	docker push ${DOCKER_REPO}:6
+push:
+	docker push ${DOCKER_REPO}

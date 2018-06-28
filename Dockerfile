@@ -1,11 +1,11 @@
 #
-# Docker Image      movoin/devops-centos:6
+# Docker Image      movoin/devops-centos
 #
 # MAINTAINER        Allen Luo <movoin@gmail.com>
 # DOCKER-VERSION    1.12.3
 #
 
-FROM        centos:6
+FROM        centos:7
 MAINTAINER  Allen Luo <movoin@gmail.com>
 
 ENV DOCKER_CONF_HOME    /opt/docker/
@@ -18,7 +18,7 @@ ENV APP_GID             1000
 
 ENV YUM_REPO_MIRROR     aliyun
 
-ADD localscripts.tar /
+COPY scripts/ /usr/local/bin/
 
 COPY conf/ /opt/docker/
 
@@ -39,6 +39,7 @@ RUN set -x \
         logrotate \
         syslog-ng \
         syslog-ng-libdbi \
+        supervisor \
     # Install
     && /opt/docker/bin/install.sh \
     # Bootstrap

@@ -1,4 +1,4 @@
-# Centos Docker Image
+# Centos 7 Docker Image
 
 默认使用 `Supervisord` 作为入口，同时支持 `noop` (不启动 Supervisord, 容器内由 shell 执行一个空循环，以确保容器处于运行状态) 和 `root` 方式 (可直接以 `root` 进入容器)。
 
@@ -8,14 +8,10 @@
 ![](https://img.shields.io/badge/Docker-1.12.3-blue.svg)
 ![](https://img.shields.io/badge/License-Private-red.svg)
 
-## 支持版本
-
-- `6.8`, `latest` (`versions/6.8/Dockerfile`)
-
 ## 如何使用
 
 ```
-FROM movoin/devops-centos:6
+FROM movoin/devops-centos
 ```
 
 ## 构建机制与生命周期
@@ -37,6 +33,6 @@ docker pull movoin/devops-centos
 
 ## 更新日志
 
-#### `2018-03-08`
+#### `2018-06-28`
 
 - 创建项目

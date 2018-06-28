@@ -37,12 +37,12 @@ if [ $REPO == '' ];then
 fi
 
 if [ $REPO == 'aliyun' ];then
-    BASE_URL=http://mirrors.aliyun.com/repo/Centos-6.repo
-    EPEL_URL=http://mirrors.aliyun.com/repo/epel-6.repo
+    BASE_URL=http://mirrors.aliyun.com/repo/Centos-7.repo
+    EPEL_URL=http://mirrors.aliyun.com/repo/epel-7.repo
 fi
 
 if [ $REPO == '163' ];then
-    BASE_URL=http://mirrors.163.com/.help/CentOS6-Base-163.repo
+    BASE_URL=http://mirrors.163.com/.help/CentOS7-Base-163.repo
     EPEL_URL=http://mirrors.163.com/.help/fedora-163.repo
 fi
 
