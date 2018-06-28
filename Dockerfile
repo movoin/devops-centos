@@ -33,7 +33,6 @@ RUN set -x \
         dnsutils \
         bind-utils \
         cronie \
-        logrotate \
         supervisor \
     # Install
     && /opt/docker/bin/install.sh \
