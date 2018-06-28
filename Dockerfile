@@ -16,7 +16,7 @@ ENV APP_GROUP           app
 ENV APP_UID             1000
 ENV APP_GID             1000
 
-ENV YUM_REPO_MIRROR     aliyun
+# ENV YUM_REPO_MIRROR     aliyun
 
 COPY scripts/ /usr/local/bin/
 
@@ -26,7 +26,7 @@ RUN set -x \
     && touch /_I_AM_DOCKER \
     && chmod -R +x /opt/docker/bin/* \
     && echo "export TERM=xterm" >> /root/.bashrc \
-    && /usr/local/bin/docker-mirror $YUM_REPO_MIRROR \
+    # && /usr/local/bin/docker-mirror $YUM_REPO_MIRROR \
     && /usr/local/bin/docker-install \
         zip \
         unzip \
