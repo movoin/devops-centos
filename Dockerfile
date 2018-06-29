@@ -33,7 +33,6 @@ RUN set -x \
         dnsutils \
         bind-utils \
         cronie \
-        supervisor \
     # Install
     && /opt/docker/bin/install.sh \
     # Bootstrap
