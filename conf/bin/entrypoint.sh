@@ -11,7 +11,10 @@ trap 'echo sigkill ; exit' SIGKILL
 # sanitize input and set task
 TASK="$(echo $1| sed 's/[^-_a-zA-Z0-9]*//g')"
 
-source /opt/docker/bin/functions.sh
+###
+ # Provision
+ ##
+source "$DOCKER_CONF_PATH/bin/provision.sh"
 
 if [[ "$UID" -eq 0 ]]; then
     # Only run provision if user is root

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-source /opt/docker/bin/functions.sh
+###
+ # Common Functions
+ ##
+source "$DOCKER_CONF_PATH/bin/functions.sh"
 
-includeScriptDir "/opt/docker/bin/service.d/cron.d"
+execShells "$DOCKER_CONF_PATH/bin/service.d/cron.d"
 
 exec /usr/sbin/crond -n

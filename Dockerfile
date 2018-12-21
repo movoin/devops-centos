@@ -5,10 +5,9 @@
 # DOCKER-VERSION    1.12.3
 #
 
-FROM        centos:7
-MAINTAINER  Allen Luo <movoin@gmail.com>
+FROM centos:7
 
-ENV DOCKER_CONF_HOME    /opt/docker/
+ENV DOCKER_CONF_PATH    /docker
 
 ENV APP_PATH            /app
 ENV APP_USER            app
@@ -16,13 +15,12 @@ ENV APP_GROUP           app
 ENV APP_UID             1000
 ENV APP_GID             1000
 
-COPY scripts/ /usr/local/bin/
-
-COPY conf/ /opt/docker/
+COPY conf/              $DOCKER_CONF_PATH
+COPY scripts/           /usr/local/bin/
 
 RUN set -x \
     && touch /_I_AM_DOCKER \
-    && chmod -R +x /opt/docker/bin/* \
+    && chmod -R +x $DOCKER_CONF_PATH/bin/* \
     && echo "export TERM=xterm" >> /root/.bashrc \
     && /usr/local/bin/docker-install \
         zip \
@@ -33,11 +31,9 @@ RUN set -x \
         dnsutils \
         bind-utils \
         cronie \
-    # Install
-    && /opt/docker/bin/install.sh \
     # Bootstrap
-    && /opt/docker/bin/bootstrap.sh
+    && $DOCKER_CONF_PATH/bin/bootstrap.sh
 
-ENTRYPOINT [ "/opt/docker/bin/entrypoint.sh" ]
+ENTRYPOINT [ "/docker/bin/entrypoint.sh" ]
 
 CMD [ "supervisord" ]

@@ -8,4 +8,4 @@
 rootCheck "supervisord"
 
 ## Start services
-exec /opt/docker/bin/service.d/supervisor.sh
+exec "$DOCKER_CONF_PATH/bin/service.d/supervisor.sh"

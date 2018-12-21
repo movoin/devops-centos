@@ -20,3 +20,6 @@ run:
 
 push:
 	docker push ${DOCKER_REPO}
+
+clean:
+	docker images | grep none | awk '{system("docker rmi "$3)}'
