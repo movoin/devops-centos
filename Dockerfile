@@ -2,7 +2,7 @@
 # Docker Image      movoin/devops-centos
 #
 # MAINTAINER        Allen Luo <movoin@gmail.com>
-# DOCKER-VERSION    1.12.3
+# DOCKER-VERSION    18.09.0
 #
 
 FROM centos:7
