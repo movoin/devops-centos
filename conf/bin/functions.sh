@@ -16,146 +16,97 @@ function rootCheck() {
 
 
 ###
- # Copy files to
- #
- # $1 -> from
- # $2 -> to
+ # $1 -> path
  #
  ##
-function copyFilesTo() {
-	for FILE_C in "$1"/*; do
-		# Backup old file
-		if [ -f "$2/$(basename $FILE_C)" ];then
-			if [ -f "$2/$(basename $FILE_C).sav" ];then
-				rm -f "$2/$(basename $FILE_C).sav"
-			fi
-
-			mv "$2/$(basename $FILE_C)"{,.sav}
-		fi
-
-		/bin/cp -fr "$FILE_C" "$2/$(basename $FILE_C)"
-		# Log
-		echo "      -> Copy file : '$FILE_C' into '$2/$(basename $FILE_C)'"
-	done
+function createDir() {
+	if [ ! -d "$1" ];then
+		/bin/mkdir -p $1
+	fi
 }
 
 
 ###
- # Copy file to
- #
  # $1 -> from
  # $2 -> to
  #
  ##
 function copyFileTo() {
-	# Backup old file
-	if [ -f "$2" ];then
-		if [ -f "$2.sav" ];then
-			rm -f "$2.sav"
-		fi
-
-		mv "$2"{,.sav}
-	fi
-
 	/bin/cp -fr "$1" "$2"
 	# Log
-	echo "      -> Copy file : '$1' into '$2'"
+	echo " ---> Copy file : '$1' into '$2'"
 }
 
 
 ###
- # Include script directory text inside a file
+ # $1 -> from
+ # $2 -> to
  #
+ ##
+function copyFilesTo() {
+	createDir $2
+
+	for FILE_C in "$1"/*; do
+		copyFileTo "$FILE_C" "$2/$(basename $FILE_C)"
+	done
+}
+
+
+###
+ # $1 -> file
+ #
+ ##
+function execShell() {
+	# Log
+	echo " ---> Exec script : '$1'"
+	# run custom scripts
+	source "$1"
+}
+
+
+###
  # $1 -> path
  #
  ##
-function includeScriptDir() {
+function execShells() {
 	for FILE_S in "$1"/*.sh; do
-		# Log
-		echo "-> Exec script : '$FILE_S'"
-		# run custom scripts, only once
-		. "$FILE_S"
+		execShell "$FILE_S"
 	done
 }
 
 
 ###
- # Install script directory text inside a file
+ # $1 -> file
  #
+ ##
+function execShellOnce() {
+	execShell "$1"
+	rm -f -- "$1"
+}
+
+
+###
  # $1 -> path
  #
  ##
-function installScriptDir() {
+function execShellsOnce() {
 	for FILE_I in "$1"/*.sh; do
-		# Log
-		echo "  * Install script : '$FILE_I'"
-		# run custom scripts, only once
-		. "$FILE_I"
-		rm -f -- "$FILE_I"
+		execShellOnce "$FILE_I"
 	done
 }
 
 
 ###
- # Run "onbuild" provisioning
+ # $1 -> search
+ # $2 -> replace
+ # $3 -> path
+ # $4 -> file (default: *.*)
+ #
  ##
-function runProvision() {
-	for FILE in /opt/docker/provision/onbuild.d/*.sh; do
-		# Log
-		echo "  * Exec build : '$FILE'"
-		# run custom scripts, only once
-		. "$FILE"
-		rm -f -- "$FILE"
-	done
-}
-
-
-###
- # Sync logrotate.d configs
- ##
-function syncLogrotateConf() {
-	copyFilesTo "/opt/docker/etc/logrotate.d" "/etc/logrotate.d"
-	rm -rf /opt/docker/etc/logrotate.d
-}
-
-
-###
- # Sync syslog-ng configs
- ##
-function syncSyslogNgConf() {
-	copyFilesTo "/opt/docker/etc/syslog-ng" "/etc/syslog-ng"
-	rm -rf /opt/docker/etc/syslog-ng
-}
-
-
-###
- # Run "entrypoint" provisioning
- ##
-function runProvisionEntrypoint() {
-	includeScriptDir "/opt/docker/provision/entrypoint.d"
-}
-
-
-###
- # Run "entrypoint" scripts
- ##
-function runEntrypoints() {
-	###############
-	# Try to find entrypoint
-	###############
-
-	ENTRYPOINT_SCRIPT="/opt/docker/bin/entrypoint.d/${TASK}.sh"
-
-	if [ -f "$ENTRYPOINT_SCRIPT" ]; then
-		. "$ENTRYPOINT_SCRIPT"
+function replaceFile() {
+	if [ "$4"x == "x" ];then
+		find "${3}" -iname '*.conf' -print0 | xargs -0 -r /usr/local/bin/docker-replace --quiet "${1}" "${2}"
+	else
+		find "${3}" -iname "$4" -print0 | xargs -0 -r /usr/local/bin/docker-replace --quiet "${1}" "${2}"
 	fi
-
-	###############
-	# Run default
-	###############
-	if [ -f "/opt/docker/bin/entrypoint.d/default.sh" ]; then
-		. /opt/docker/bin/entrypoint.d/default.sh
-	fi
-
-	exit
 }
