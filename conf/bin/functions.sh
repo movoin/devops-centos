@@ -32,9 +32,9 @@ function createDir() {
  #
  ##
 function copyFileTo() {
-	/bin/cp -fr "$1" "$2"
 	# Log
 	echo " ---> Copy file : '$1' into '$2'"
+	/bin/cp -fr "$1" "$2"
 }
 
 
