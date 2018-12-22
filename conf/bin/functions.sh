@@ -44,10 +44,14 @@ function copyFileTo() {
  #
  ##
 function copyFilesTo() {
-	createDir $2
+	if [ ! -d "$1" ];then
+		/bin/mkdir -p $1
+	fi
 
 	for FILE_C in "$1"/*; do
-		copyFileTo "$FILE_C" "$2/$(basename $FILE_C)"
+		# Log
+		echo " ---> Copy file : '$1' into '$2'"
+		/bin/cp -fr "$1" "$2"
 	done
 }
 
@@ -70,7 +74,10 @@ function execShell() {
  ##
 function execShells() {
 	for FILE_S in "$1"/*.sh; do
-		execShell "$FILE_S"
+		# Log
+		echo " ---> Exec script : '$1'"
+		# run custom scripts
+		source "$1"
 	done
 }
 
@@ -80,7 +87,11 @@ function execShells() {
  #
  ##
 function execShellOnce() {
-	execShell "$1"
+	# Log
+	echo " ---> Exec script : '$1'"
+	# run custom scripts
+	source "$1"
+
 	rm -f -- "$1"
 }
 
@@ -91,7 +102,12 @@ function execShellOnce() {
  ##
 function execShellsOnce() {
 	for FILE_I in "$1"/*.sh; do
-		execShellOnce "$FILE_I"
+		# Log
+		echo " ---> Exec script : '$FILE_I'"
+		# run custom scripts
+		source "$FILE_I"
+
+		rm -f -- "$FILE_I"
 	done
 }
 

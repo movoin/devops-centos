@@ -13,12 +13,11 @@ rm -f /tmp/setuptools-*.zip
 
 copyFileTo "$DOCKER_CONF_PATH/etc/supervisord.conf" "/etc/supervisord.conf"
 
-replaceFile "DOCKER_CONF_HOME" "$DOCKER_CONF_PATH" "/etc/supervisord.conf" "*.conf"
-replaceFile "DOCKER_CONF_HOME" "$DOCKER_CONF_PATH" "$DOCKER_CONF_PATH/etc/supervisor.d" "*.conf"
+replaceFile "DOCKER_CONF_PATH" "$DOCKER_CONF_PATH" "/etc/supervisord.conf" "*.conf"
+replaceFile "DOCKER_CONF_PATH" "$DOCKER_CONF_PATH" "$DOCKER_CONF_PATH/etc/supervisor.d" "*.conf"
 
 rm -f "$DOCKER_CONF_PATH/etc/supervisord.conf"
 
-if [ -d "/usr/lib/python2.7" ];then
-	find "/usr/lib/python2.7/" -type f | grep .pyc | awk '{system("rm -f "$1)}'
-	find "/usr/lib/python2.7/" -type f | grep .pyo | awk '{system("rm -f "$1)}'
-fi
+# Clear files (reduce snapshot size)
+/usr/local/bin/docker-clean
+rm -f /anaconda-post.log

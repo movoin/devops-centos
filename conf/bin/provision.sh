@@ -8,21 +8,21 @@ source "$DOCKER_CONF_PATH/bin/functions.sh"
 
 
 ###
- # Run "onbuild" provisioning
- ##
-function runProvision() {
-	if [ -d "$DOCKER_CONF_PATH/provision/onbuild.d" ];then
-		execShellsOnce "$DOCKER_CONF_PATH/provision/onbuild.d"
-	fi
-}
-
-
-###
  # Run "oninstall" provisioning
  ##
 function runInstall() {
 	if [ -d "$DOCKER_CONF_PATH/provision/install.d" ];then
 		execShellsOnce "$DOCKER_CONF_PATH/provision/install.d"
+	fi
+}
+
+
+###
+ # Run "onbuild" provisioning
+ ##
+function runProvision() {
+	if [ -d "$DOCKER_CONF_PATH/provision/onbuild.d" ];then
+		execShellsOnce "$DOCKER_CONF_PATH/provision/onbuild.d"
 	fi
 }
 

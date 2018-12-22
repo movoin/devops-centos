@@ -20,17 +20,16 @@ COPY scripts/           /usr/local/bin/
 
 RUN set -x \
     && touch /_I_AM_DOCKER \
-    && chmod -R +x $DOCKER_CONF_PATH/bin/* \
-    && echo "export TERM=xterm" >> /root/.bashrc \
+    && chmod -R +x $DOCKER_CONF_PATH/bin/* /usr/local/bin/* \
     && /usr/local/bin/docker-install \
-        zip \
-        unzip \
-        bzip2 \
-        wget \
-        curl \
-        dnsutils \
-        bind-utils \
-        cronie \
+    zip \
+    unzip \
+    bzip2 \
+    wget \
+    curl \
+    dnsutils \
+    bind-utils \
+    cronie \
     # Bootstrap
     && $DOCKER_CONF_PATH/bin/bootstrap.sh
 

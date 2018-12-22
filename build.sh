@@ -15,6 +15,19 @@ echo ""
 
 ######
 
+
+echo "> Clean up"
+
+echo ""
+
+find ./ -type f | grep .DS_Store | awk '{system("rm -rf "$1)}'
+
+echo ""
+
+
+######
+
+
 echo "> Running docker"
 
 echo ""
