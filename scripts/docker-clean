@@ -11,5 +11,4 @@ rm -rf /var/cache/yum/* /tmp/*
 
 if [ -d "/usr/lib/python2.7" ];then
 	find "/usr/lib/python2.7/" -type f | grep .pyc | awk '{system("rm -f "$1)}'
-	find "/usr/lib/python2.7/" -type f | grep .pyo | awk '{system("rm -f "$1)}'
 fi

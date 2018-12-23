@@ -75,9 +75,9 @@ function execShell() {
 function execShells() {
 	for FILE_S in "$1"/*.sh; do
 		# Log
-		echo " ---> Exec script : '$1'"
+		echo " ---> Exec script : '$FILE_S'"
 		# run custom scripts
-		source "$1"
+		source "$FILE_S"
 	done
 }
 

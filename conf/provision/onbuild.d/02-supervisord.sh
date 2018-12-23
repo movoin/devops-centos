@@ -21,3 +21,7 @@ rm -f "$DOCKER_CONF_PATH/etc/supervisord.conf"
 # Clear files (reduce snapshot size)
 /usr/local/bin/docker-clean
 rm -f /anaconda-post.log
+
+if [ -d "/usr/lib/python2.7" ];then
+	find "/usr/lib/python2.7/" -type f | grep .pyo | awk '{system("rm -f "$1)}'
+fi
