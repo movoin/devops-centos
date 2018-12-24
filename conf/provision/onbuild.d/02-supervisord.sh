@@ -14,7 +14,6 @@ rm -f /tmp/setuptools-*.zip
 copyFileTo "$DOCKER_CONF_PATH/etc/supervisord.conf" "/etc/supervisord.conf"
 
 replaceFile "<DOCKER_CONF_PATH>" "$DOCKER_CONF_PATH" "/etc/supervisord.conf" "*.conf"
-replaceFile "<DOCKER_CONF_PATH>" "$DOCKER_CONF_PATH" "$DOCKER_CONF_PATH/etc/supervisor.d" "*.conf"
 
 rm -f "$DOCKER_CONF_PATH/etc/supervisord.conf"
 
