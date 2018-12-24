@@ -38,20 +38,12 @@ function runProvisionEntrypoint() {
 
 
 ###
- # Sync logrotate.d configs
- ##
-function syncLogrotateConf() {
-	copyFilesTo "$DOCKER_CONF_PATH/etc/logrotate.d" "/etc/logrotate.d"
-	rm -rf "$DOCKER_CONF_PATH/etc/logrotate.d"
-}
-
-
-###
- # Sync syslog-ng configs
- ##
-function syncSyslogNgConf() {
-	copyFilesTo "$DOCKER_CONF_PATH/etc/syslog-ng" "/etc/syslog-ng"
-	rm -rf "$DOCKER_CONF_PATH/etc/syslog-ng"
+ # $1 -> name
+ #
+function runInit() {
+	if [ -d "$DOCKER_CONF_PATH/bin/service.d/$1" ];then
+		execShells "$DOCKER_CONF_PATH/bin/service.d/$1"
+	fi
 }
 
 

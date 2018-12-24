@@ -3,8 +3,8 @@
 ###
  # Common Functions
  ##
-source "$DOCKER_CONF_PATH/bin/functions.sh"
+source "$DOCKER_CONF_PATH/bin/provision.sh"
 
-execShells "$DOCKER_CONF_PATH/bin/service.d/cron.d"
+runInit "cron.d"
 
 exec /usr/sbin/crond -n

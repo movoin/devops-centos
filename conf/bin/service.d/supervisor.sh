@@ -3,8 +3,8 @@
 ###
  # Common Functions
  ##
-source "$DOCKER_CONF_PATH/bin/functions.sh"
+source "$DOCKER_CONF_PATH/bin/provision.sh"
 
-execShells "$DOCKER_CONF_PATH/bin/service.d/supervisor.d"
+runInit "supervisor.d"
 
 exec supervisord -c /etc/supervisord.conf --logfile /dev/null --pidfile /dev/null --user root
